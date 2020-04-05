@@ -21,3 +21,18 @@ Ric Mershon
 * [ReactJS](https://reactjs.org/) - a JavaScript library for building user interfaces.
 * [GraphQL](https://www.graphql.com/) - an open-source data query and manipulation language for APIs, and a runtime for fulfilling queries with existing data.
 * JSON Web Token (JWT) - an internet standard for creating JSON-based access tokens that assert some number of claims.
+
+### MongoDB Database Shemas
+
+### Member Shema
+
+```
+const userSchema = new Schema({
+    memberName: {
+        firstName: { type: String, required: true },
+        lastName: { type: String, requiredf: false }
+    },
+    memberUserName: { type: String, unique: true, required: true },
+    passwword: { type: String, required: true },
+})
+```
