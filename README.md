@@ -40,9 +40,8 @@ const memberSchema = new Schema(
   }
 )
 ```
-# Item Schema
-```
 #### Item Schema
+```
 const itemSchema = new Schema(
   {
     name: { type: String, required: true },
