@@ -8,7 +8,6 @@ Ric Mershon
 
 ### Background
 
-
 ### Technologies Used
 
 * [Express](https://expressjs.com/) - backend framework for Node.js.
@@ -21,24 +20,28 @@ Ric Mershon
 * [React Bootstrap](https://react-bootstrap.github.io/) for a responsive, mobile-first layout.
 * [GraphQL](https://www.graphql.com/) - an open-source data query and manipulation language for APIs, and a runtime for fulfilling queries with existing data.
 * JSON Web Token (JWT) - an internet standard for creating JSON-based access tokens that assert some number of claims.
+* ]Trello board](https://trello.com/b/AKxShGdp/kibbutz-19)
 
 ### MongoDB Database Shemas
 
 #### Member Shema
 ```
-const memberSchema = new Schema(
-  {
-    userName: {
-      firstName: { type: String, required: true },
-      lastName: { type: String, requiredf: false }
-    },
-    userName: { type: String, unique: true, required: true },
-    password: { type: String, required: true },
-    location: { type: String, required: true },
-    have: [ Item.schema ],
-    need: [ Item.schema ]
+const memberSchema = new Schema({
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: false },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  location: { type: String, required: true },
+  have: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Item'} ],
+  need: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Item'} ]
+})
+ 
+memberSchema.methods.userName = function (){
+ return {
+   firstName: this.firstName,
+   lastName: this.lastName
   }
-)
+}
 ```
 #### Item Schema
 ```
