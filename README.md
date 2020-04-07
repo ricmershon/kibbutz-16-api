@@ -26,19 +26,22 @@ Ric Mershon
 
 #### Member Shema
 ```
-const memberSchema = new Schema(
-  {
-    userName: {
-      firstName: { type: String, required: true },
-      lastName: { type: String, requiredf: false }
-    },
-    userName: { type: String, unique: true, required: true },
-    password: { type: String, required: true },
-    location: { type: String, required: true },
-    have: [ Item.schema ],
-    need: [ Item.schema ]
+const memberSchema = new Schema({
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: false },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  location: { type: String, required: true },
+  have: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Item'} ],
+  need: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Item'} ]
+})
+ 
+memberSchema.methods.userName = function (){
+ return {
+   firstName: this.firstName,
+   lastName: this.lastName
   }
-)
+}
 ```
 #### Item Schema
 ```
