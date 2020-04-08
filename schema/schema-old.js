@@ -143,6 +143,22 @@ const RootMutation = new GraphQLObjectType(
           return item.save()
         }
       },
+      deleteMember: {
+        type: MemberType,
+        args: { id: { type: GraphQLID } },
+        resolve(parent, args) {
+          console.log(`Member to delete: ${args.id}`);
+          return Member.findByIdAndRemove(args.id)
+        }
+      },
+      deleteItem: {
+        type: ItemType,
+        args: { id: { type: GraphQLID } },
+        resolve(parent, args) {
+          console.log(`Item to delete: ${args.id}`);
+          return Item.findByIdAndRemove(args.id)
+        }
+      },
       updateMember: {
         type: MemberType,
         args: {
@@ -152,37 +168,9 @@ const RootMutation = new GraphQLObjectType(
           email: { type: GraphQLString },
           zipCode: { type: GraphQLString }
         },
-        resolve(parent, args) {
+        resolve(parent, xargs) {
           console.log(`Updating member: ${args.id}`);
           return Member.findByIdAndUpdate(args.id, args)
-        }
-      },
-      updateItem: {
-        type: ItemType,
-        args: {
-          id: { type: GraphQLID },
-          name: { type: GraphQLString },
-          quantity: { type: GraphQLInt }
-        },
-        resolve(parent, args) {
-          console.log(`Updating item: ${args.id}`);
-          return Item.findByIdAndUpdate(args.id, args)
-        }
-      },
-      deleteMember: {
-        type: MemberType,
-        args: { id: { type: GraphQLID } },
-        resolve(parent, args) {
-          console.log(`Deleting member with id: ${args.id}`);
-          return Member.findByIdAndRemove(args.id)
-        }
-      },
-      deleteItem: {
-        type: ItemType,
-        args: { id: { type: GraphQLID } },
-        resolve(parent, args) {
-          console.log(`Deleting item with id: ${args.id}`);
-          return Item.findByIdAndRemove(args.id)
         }
       }
     }
