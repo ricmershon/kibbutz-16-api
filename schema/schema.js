@@ -79,13 +79,6 @@ const RootQuery = new GraphQLObjectType(
         resolve(parents, args) {
           console.log(`Looking for item with id: ${args.id}`);
           return Item.findById(args.id)
-          // Item.findById(args.id, (error, foundItem) => {
-          //   if (error) {
-          //     console.log(`There was an error retrieving member record: ${error}`);
-          //   } else {
-          //     console.log("Found item", foundItem);
-          //   }
-          // })
         }
       },
       member: {
@@ -154,7 +147,7 @@ const RootMutation = new GraphQLObjectType(
         },
         resolve(parent, args) {
           console.log(`Updating member: ${args.id}`);
-          return Member.findByIdAndUpdate(args.id, args)
+          return Member.findByIdAndUpdate(args.id, args, { new: true })
         }
       },
       updateItem: {
@@ -166,7 +159,7 @@ const RootMutation = new GraphQLObjectType(
         },
         resolve(parent, args) {
           console.log(`Updating item: ${args.id}`);
-          return Item.findByIdAndUpdate(args.id, args)
+          return Item.findByIdAndUpdate(args.id, args, { new: true })
         }
       },
       deleteMember: {
