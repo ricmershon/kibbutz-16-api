@@ -13,14 +13,6 @@
  ===============================================================================
  */
 
-const graphql = require("graphql")
-const _ = require("lodash")
-const Item = require('../models/items')
-const Member = require('../models/members')
-
-// Get GraphQLObjectType function from graphql to define the data type
-// structure of queries and their model type.
-
 const {
   GraphQLObjectType,
   GraphQLString,
@@ -28,7 +20,11 @@ const {
   GraphQLID,
   GraphQLList,
   GraphQLSchema
-} = graphql;
+} = require("graphql")
+
+const _ = require("lodash")
+const Item = require('../models/items')
+const Member = require('../models/members')
 
 const itemsArray = require("./items_seed")
 const membersArray = require("./members_seed")
@@ -40,12 +36,11 @@ const ItemType = new GraphQLObjectType(
     fields: () => ({
       id: { type: GraphQLID },
       name: { type: GraphQLString },
-      description: { type: GraphQLString },
       quantity: { type: GraphQLInt },
       member: {
         type: MemberType,
         resolve(parent, args) {
-          return Owner.findById(parent.memberId)
+          return Member.findById(parent.memberId)
         }
       }
     })
@@ -82,13 +77,22 @@ const RootQuery = new GraphQLObjectType(
         type: ItemType,
         args: { id: { type: GraphQLID } },
         resolve(parents, args) {
+          console.log(`Looking for item with id: ${args.id}`);
           return Item.findById(args.id)
+          // Item.findById(args.id, (error, foundItem) => {
+          //   if (error) {
+          //     console.log(`There was an error retrieving member record: ${error}`);
+          //   } else {
+          //     console.log("Found item", foundItem);
+          //   }
+          // })
         }
       },
       member: {
         type: MemberType,
         args: { id: { type: GraphQLID } },
-        resolve(parents, args) {
+        resolve(parent, args) {
+          console.log(`Looking for member with id: ${args.id}`);
           return Member.findById(args.id)
         }
       },
@@ -122,32 +126,21 @@ const RootMutation = new GraphQLObjectType(
         },
         resolve(parent, args) {
           console.log("Member", args);
-          Member.create(args, (error, createdMember) => {
-            if (error) {
-              console.log(`There was an error creating new member record: ${error}`);
-            } else {
-              console.log(`Member database record created successfully. ${createdMember}`);
-            }
-          })
+          const member = new Member(args)
+          return member.save()
         }
       },
       addItem: {
         type: ItemType,
         args: {
           name: { type: GraphQLString },
-          description: { type: GraphQLString },
           quantity: { type: GraphQLInt },
           memberId: { type: GraphQLID }
         },
         resolve(parent, args) {
           console.log("Item", args);
-          Item.create(args, (error, createdItem) => {
-            if (error) {
-              console.log(`There was an error creating new item record: ${error}`);
-            } else {
-              console.log(`Item database record created successfully. ${createdItem}`);
-            }
-          })
+          const item = new Item(args)
+          return item.save()
         }
       }
     }
