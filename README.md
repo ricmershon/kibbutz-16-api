@@ -20,7 +20,7 @@ Ric Mershon
 * [React Bootstrap](https://react-bootstrap.github.io/) for a responsive, mobile-first layout.
 * [GraphQL](https://www.graphql.com/) - an open-source data query and manipulation language for APIs, and a runtime for fulfilling queries with existing data.
 * JSON Web Token (JWT) - an internet standard for creating JSON-based access tokens that assert some number of claims.
-* ]Trello board](https://trello.com/b/AKxShGdp/kibbutz-19)
+* [Trello board](https://trello.com/b/AKxShGdp/kibbutz-19)
 
 ### MongoDB Database Shemas
 
