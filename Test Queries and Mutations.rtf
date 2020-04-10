@@ -6,68 +6,154 @@
 \deftab560
 \pard\pardeftab560\slleading20\partightenfactor0
 
-\f0\fs36 \cf0 mutation \{\
-	addMember(firstName: "Ric", lastName: "Mershon", email: "ric@ricmershon.com", zipCode: "30009")  \{\
-		firstName\
-		lastName\
-		email\
-		zipCode\
-	\}\
+\f0\fs36 \cf0 # Add members\
+\
+# mutation \{\
+#   addMember(name: "Ric Mershon" email: "rmersh@ricmershon.com" phone: "6786406926" zipCode: "30009") \{\
+#     _id name email phone zipCode\
+#   \}\
+# \}\
+\
+# mutation \{\
+#   addMember(name: "Mara Mershon" email: "foor@ricmershon.com" phone: "6786406926" zipCode: "30076") \{\
+#     _id name email phone zipCode\
+#   \}\
+# \}\
+\
+# mutation \{\
+#   addMember(name: "Jake Mershon" email: "bar@ricmershon.com" phone: "6786406926" zipCode: "30076") \{\
+#     _id name email phone zipCode\
+#   \}\
+# \}\
+\
+# mutation \{\
+#   addMember(name: "Mike Wazowski" email: "mike@monsters.com.com" phone: "6786406926" zipCode: "12345") \{\
+#     _id name email phone zipCode\
+#   \}\
+# \}\
+\
+# mutation \{\
+#   addMember(name: "Sully" email: "sully@ricmershon.com" phone: "6786406926" zipCode: "54321") \{\
+#     _id name email phone zipCode\
+#   \}\
+# \}\
+\
+# mutation \{\
+#   addMember(name: "Steve Johnson" email: "steve@johnson.com" phone: "6786406926" zipCode: "30009") \{\
+#     _id name email phone zipCode\
+#   \}\
+# \}\
+\
+# Query member\
+\
+# query \{\
+#   getMember (_id:"5e90a708cd2640e7b2a72322") \{\
+#     name\
+#     email\
+#     phone\
+#     zipCode\
+#   \}\
+# \}\
+\
+# Query members \
+\
+# query \{ getMembers \{\
+#   _id name email phone\
+# \} \}\
+\
+# update member\
+\
+# mutation \{\
+#   updateMember(_id: "5e90a708cd2640e7b2a72322" name: "Jim") \{\
+#     name\
+#     email\
+#   \}\
+# \}\
+\
+# Add items\
+\
+# mutation \{\
+#   addItem(description: "I need clorox wipes", quantity: 5, memberId: "5e909f47b284f5e3ff41385f") \{\
+#     description\
+#     quantity\
+#   \}\
+# \}\
+\
+# mutation \{\
+#   addItem(description: "I need diapers", quantity: 10, memberId: "5e909f47b284f5e3ff41385f") \{\
+#     description\
+#     quantity\
+#   \}\
+# \}\
+\
+# mutation \{\
+#   addItem(description: "I need babysitting", memberId: "5e909f47b284f5e3ff41385f") \{\
+#     description\
+#     quantity\
+#   \}\
+# \}\
+\
+# mutation \{\
+#   addItem(description: "I would like to do volunteer work", memberId: "5e909ef7b284f5e3ff41385d") \{\
+#     description\
+#     quantity\
+#   \}\
+# \}\
+\
+# mutation \{\
+#   addItem(description: "I need babysitting", memberId: "5e90a6e3cd2640e7b2a7231e") \{\
+#     description\
+#     quantity\
+#   \}\
+# \}\
+\
+# Query item\
+\
+# query \{\
+#   getItem (_id:"5e90a8d67f3d85e8a16e7827") \{\
+#     description\
+#     quantity\
+#     member \{\
+#       _id\
+#       name\
+#       email\
+#     \}\
+#   \}\
+# \}\
+\
+# Query items \
+\
+# query \{\
+#   getItems \{\
+#   	_id description quantity\
+#     member \{\
+#       _id\
+#       name\
+#       email\
+#       phone\
+#     \}\
+# 	\}\
+# \}\
+\
+# update item\
+\
+# mutation \{\
+#   updateItem(_id: "5e90a2e6b284f5e3ff413864" description: "I only need a few now" quantity: 3) \{\
+#     description\
+# 			quantity\
+#   \}\
+# \}\
+\
+# Query all items associated with a member\
+\
+query \{\
+  getMember(_id: "5e90a6e3cd2640e7b2a7231e") \{\
+    name\
+    email\
+    items \{\
+      description\
+      quantity\
+    \}\
+  \}\
 \}\
-\
-mutation \{\
-	addMember(firstName: "Jake", lastName: "Mershon", email: "foo@foobar.com", zipCode: "30076")  \{\
-		firstName\
-		lastName\
-		email\
-		zipCode\
-	\}\
-\}\
-\
-mutation \{\
-	addMember(firstName: "Mara", lastName: "Mershon", email: "bar@foobar.com", zipCode: "30076")  \{\
-		firstName\
-		lastName\
-		email\
-		zipCode\
-	\}\
-\}\
-\
-mutation \{\
-	addItem(name: "Clorox wipes", quantity: 3, memberId: "5e8ce5c81c9d440000621cae")  \{\
-		name\
-	\}\
-\}\
-\
-mutation \{\
-	addItem(name: "Masks", quantity: 10, memberId: "5e8ce5c81c9d440000621cae")  \{\
-		name\
-	\}\
-\}\
-\
-mutation \{\
-	addItem(name: "Gloves", quantity: 4, memberId: "5e8ce5c81c9d440000621cae")  \{\
-		name\
-	\}\
-\}\
-\
-mutation \{\
-	addItem(name: "Toilet paper", quantity: 6, memberId: "5e8ce6021c9d440000621caf")  \{\
-		name\
-	\}\
-\}\
-\
-\{ \
-	item(id: "") \{\
-		name\
-		member \{\
-			items \{\
-				name\
-				quantity\
-			\}\
-		\} \
-	\}\
-\}\
-\
-\
 }

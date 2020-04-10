@@ -23,13 +23,11 @@
  */
 
 const express = require("express");
-const graphqlHTTP = require("express-graphql")
-// const methodOverride = require("method-override");
-const mongoose = require("mongoose");
-// const session = require("express-session");
-// const bodyParser = require("body-parser");
-
-const schema = require("./schema/schema")
+const expressGraphQL = require("express-graphql")
+const cors = require('cors')
+const session = require("express-session");
+const mongoose = require ('mongoose')
+const schema = require("./models/schema")
 
 /*
  ===============================================================================
@@ -49,26 +47,26 @@ const mongodbURI = process.env.MONGODB_URI;
  ===============================================================================
  */
 
+app.use(cors())
 app.use(
   "/graphql",
-  graphqlHTTP({
+  expressGraphQL({
     schema: schema,
     graphiql: true
   })
 );
 
-// app.use(methodOverride("_method"));     // Allow POST, PUT and DELETE from a form.
-// app.use(express.urlencoded({ extended: false }));
-// app.use(express.static("public"));      // Public folder for static assets.
-// app.use(express.json());                // Parses JSON.
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static("public"));      // Public folder for static assets.
+app.use(express.json());                // Parses JSON.
 
-// app.use(
-//     session({
-//         secret: process.env.SECRET,     // Radom string to prevent hacking
-//         resave: false,                  // Default
-//         saveUninitialized: false
-//     })
-// )
+app.use(
+    session({
+        secret: process.env.SECRET,     // Radom string to prevent hacking
+        resave: false,                  // Default
+        saveUninitialized: false
+    })
+)
 
 /*
  ===============================================================================
@@ -83,7 +81,7 @@ mongoose.connect(
      useUnifiedTopology: true,
      useCreateIndex: true,
      useFindAndModify: false
-  }, () => { console.log("MongoDB connected at", mongodbURI) }
+  }, () => { console.log("MongoDB connected:", mongodbURI) }
 )
 
 //

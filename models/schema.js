@@ -35,8 +35,8 @@ const {
  ===============================================================================
  */
 
-const Item = require('../models/items')
-const Member = require('../models/members')
+const Item = require('./items')
+const Member = require('./members')
 
 /*
  ===============================================================================

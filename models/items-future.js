@@ -16,8 +16,26 @@
 const mongoose = require('mongoose')
 const itemSchema = new mongoose.Schema(
   {
-    description: { type: String, required: true },
-    quantity: { type: Number, required: false },
+    requestType: {
+      type: String,
+      required: true,
+      enum: ['Requesting help', 'Need help'],
+      default: 'Requesting help'
+    },
+    tag: {
+      type: String,
+      required: false,
+      enum: [
+        'Baby Supplies',
+        'Business Support',
+        'Food',
+        'Supplies',
+        'Toiletries',
+        'Volunteer Work'
+      ]
+    },
+    notes: String,
+    quantity: Number,
     memberId: String
   }
 )

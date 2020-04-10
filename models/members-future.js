@@ -19,8 +19,14 @@ const memberSchema = new mongoose.Schema(
     name: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: false },
-    password: { type: String, required: false },
-    zipCode: { type: String, required: true }
+    password: { type: String, required: true },
+    zipCode: { type: String, required: true },
+    contactMethod: {
+      type: String,
+      required: true,
+      enum: [ 'Email', 'Text' ],
+      default: 'Email'
+    }
   }
 )
 
