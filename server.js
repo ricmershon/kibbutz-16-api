@@ -27,7 +27,7 @@ const expressGraphQL = require("express-graphql")
 const cors = require('cors')
 const session = require("express-session");
 const mongoose = require ('mongoose')
-const schema = require("./models/schema")
+const schema = require("./schema/schema")
 
 /*
  ===============================================================================

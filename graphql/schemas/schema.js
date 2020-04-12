@@ -15,7 +15,7 @@
 
 /*
   ===============================================================================
-  = GraphQL dependencies
+  = Pull in GraphQL dependencies
   ===============================================================================
   */
 
@@ -31,12 +31,12 @@ const {
 
 /*
  ===============================================================================
- = MonogoDB schemas
+ = Pull in MonogoDB schemas
  ===============================================================================
  */
 
-const Item = require('../models/items')
-const Member = require('../models/members')
+const Item = require('./items')
+const Member = require('./members')
 
 /*
  ===============================================================================
@@ -52,9 +52,7 @@ const ItemType = new GraphQLObjectType({
   name: "Item",
   fields: () => ({
     _id: { type: GraphQLID },
-    helpType: { type: GraphQLString },
-    tag: { type: GraphQLString },
-    notes: { type: GraphQLString },
+    description: { type: GraphQLString },
     quantity: { type: GraphQLInt },
     member: {
       type: MemberType,
@@ -95,7 +93,15 @@ const MemberType = new GraphQLObjectType({
 
 /*
  ===============================================================================
- = GraphQL RootQuery for Read operations
+ =
+ = RESOLVERS
+ =
+ ===============================================================================
+ */
+
+/*
+ ===============================================================================
+ = RootQuery for Read operations
  ===============================================================================
  */
 
@@ -104,7 +110,7 @@ const RootQuery = new GraphQLObjectType({
   fields: {
 
     // Returns a single item
-    item: {
+    getItem: {
       type: ItemType,
       args: { _id: { type: GraphQLID } },
       resolve(parent, args) {
@@ -113,7 +119,7 @@ const RootQuery = new GraphQLObjectType({
     },
 
     // Returns a single member
-    member: {
+    getMember: {
       type: MemberType,
       args: { _id: { type: GraphQLID } },
       resolve(parent, args) {
@@ -122,7 +128,7 @@ const RootQuery = new GraphQLObjectType({
     },
 
     // Returns all items
-    items: {
+    getItems: {
       type: new GraphQLList(ItemType),
       resolve(parent, args) {
         return Item.find({})
@@ -130,7 +136,7 @@ const RootQuery = new GraphQLObjectType({
     },
 
     // Returns all members
-    members: {
+    getMembers: {
       type: new GraphQLList(MemberType),
       resolve(parent, args) {
         return Member.find({})
@@ -141,7 +147,7 @@ const RootQuery = new GraphQLObjectType({
 
 /*
  ===============================================================================
- = GraphQL Mutation for Create, Update and Delete operations
+ = Mutation for Create, Update and Delete operations
  ===============================================================================
  */
 
@@ -169,9 +175,7 @@ const Mutation = new GraphQLObjectType({
     addItem: {
       type: ItemType,
       args: {
-        helpType: { type: GraphQLString },
-        tag: { type: GraphQLString },
-        notes: { type: GraphQLString },
+        description: { type: GraphQLString },
         quantity: { type: GraphQLInt },
         memberId: { type: GraphQLID }
       },
@@ -202,11 +206,8 @@ const Mutation = new GraphQLObjectType({
       type: ItemType,
       args: {
         _id: { type: GraphQLID },
-        helpType: { type: GraphQLString },
-        tag: { type: GraphQLString },
-        notes: { type: GraphQLString },
-        quantity: { type: GraphQLInt },
-        memberId: { type: GraphQLID }
+        description: { type: GraphQLString },
+        quantity: { type: GraphQLInt }
       },
       resolve(parent, args) {
         return Item.findByIdAndUpdate(args._id, args, { new: true })
@@ -232,6 +233,14 @@ const Mutation = new GraphQLObjectType({
     }
   } // End fields
 })  // End Mutation
+
+/*
+ ===============================================================================
+ =
+ = END RESOLVERS
+ =
+ ===============================================================================
+ */
 
 module.exports = new GraphQLSchema({
   query: RootQuery,

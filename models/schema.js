@@ -15,7 +15,7 @@
 
 /*
   ===============================================================================
-  = Pull in GraphQL dependencies
+  = GraphQL dependencies
   ===============================================================================
   */
 
@@ -31,7 +31,7 @@ const {
 
 /*
  ===============================================================================
- = Pull in MonogoDB schemas
+ = MonogoDB schemas
  ===============================================================================
  */
 
@@ -52,7 +52,9 @@ const ItemType = new GraphQLObjectType({
   name: "Item",
   fields: () => ({
     _id: { type: GraphQLID },
-    description: { type: GraphQLString },
+    helpType: { type: GraphQLString },
+    tag: { type: GraphQLString },
+    notes: { type: GraphQLString },
     quantity: { type: GraphQLInt },
     member: {
       type: MemberType,
@@ -78,6 +80,7 @@ const MemberType = new GraphQLObjectType({
     email: { type: GraphQLString },
     phone: { type: GraphQLString },
     password: { type: GraphQLString},
+    contactMethod: { type: GraphQLString },
     zipCode: { type: GraphQLString },
     items: {
       type: new GraphQLList(ItemType),
@@ -154,6 +157,7 @@ const Mutation = new GraphQLObjectType({
         name: { type: GraphQLString },
         email: { type: GraphQLString },
         phone: { type: GraphQLString },
+        contactMethod: { type: GraphQLString },
         password: { type: GraphQLString },
         zipCode: { type: GraphQLString }
       },
@@ -167,7 +171,9 @@ const Mutation = new GraphQLObjectType({
     addItem: {
       type: ItemType,
       args: {
-        description: { type: GraphQLString },
+        helpType: { type: GraphQLString },
+        tag: { type: GraphQLString },
+        notes: { type: GraphQLString },
         quantity: { type: GraphQLInt },
         memberId: { type: GraphQLID }
       },
@@ -185,6 +191,7 @@ const Mutation = new GraphQLObjectType({
         name: { type: GraphQLString },
         email: { type: GraphQLString },
         phone: { type: GraphQLString },
+        contactMethod: { type: GraphQLString },
         zipCode: { type: GraphQLString }
       },
       resolve(parent, args) {
@@ -198,8 +205,11 @@ const Mutation = new GraphQLObjectType({
       type: ItemType,
       args: {
         _id: { type: GraphQLID },
-        description: { type: GraphQLString },
-        quantity: { type: GraphQLInt }
+        helpType: { type: GraphQLString },
+        tag: { type: GraphQLString },
+        notes: { type: GraphQLString },
+        quantity: { type: GraphQLInt },
+        memberId: { type: GraphQLID }
       },
       resolve(parent, args) {
         return Item.findByIdAndUpdate(args._id, args, { new: true })

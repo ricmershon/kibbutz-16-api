@@ -14,33 +14,13 @@
  */
 
 const mongoose = require('mongoose')
-
 const itemSchema = new mongoose.Schema(
   {
-    helpType: {
-      type: String,
-      required: true,
-      enum: ['offering help', 'requesting help'],
-      default: 'requesting help'
-    },
-    tag: {
-      type: String,
-      required: true,
-      enum: [
-        'Baby Supplies',
-        'Business Support',
-        'Food',
-        'Supplies',
-        'Toiletries',
-        'Volunteer Work'
-      ]
-    },
-    notes: String,
-    quantity: Number,
+    description: { type: String, required: true },
+    quantity: { type: Number, required: false },
     memberId: String
   }
 )
-
 
 const Item = mongoose.model('Item', itemSchema)
 module.exports = Item

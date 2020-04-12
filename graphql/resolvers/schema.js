@@ -15,7 +15,7 @@
 
 /*
   ===============================================================================
-  = GraphQL dependencies
+  = Pull in GraphQL dependencies
   ===============================================================================
   */
 
@@ -31,67 +31,15 @@ const {
 
 /*
  ===============================================================================
- = MonogoDB schemas
+ = Pull in MonogoDB schemas
  ===============================================================================
  */
 
-const Item = require('../models/items')
-const Member = require('../models/members')
+const Item = require('../../models/items')
+const Member = require('../../models/members')
 
-/*
- ===============================================================================
- = GraphQL Types
- ===============================================================================
- */
-
-/*
- = Define ItemType
- */
-
-const ItemType = new GraphQLObjectType({
-  name: "Item",
-  fields: () => ({
-    _id: { type: GraphQLID },
-    helpType: { type: GraphQLString },
-    tag: { type: GraphQLString },
-    notes: { type: GraphQLString },
-    quantity: { type: GraphQLInt },
-    member: {
-      type: MemberType,
-
-      // This resolve method returns the member
-      // that owns the item.
-      resolve(parent, args) {
-        return Member.findById(parent.memberId)
-      }
-    }
-  })  // End fields
-})    // End ItemType
-
-/*
- = Define MemberType
- */
-
-const MemberType = new GraphQLObjectType({
-  name: "Member",
-  fields: () => ({
-    _id: { type: GraphQLID },
-    name: { type: GraphQLString },
-    email: { type: GraphQLString },
-    phone: { type: GraphQLString },
-    password: { type: GraphQLString},
-    zipCode: { type: GraphQLString },
-    items: {
-      type: new GraphQLList(ItemType),
-
-      // This resolve() method finds and returns an array
-      // of all the items associated with the member
-      resolve(parent, args) {
-        return Item.find({ memberId: parent._id })
-      }
-    }
-  })  // End fields
-})    // End MemberType
+const ItemType = require('../schemas/items')
+const MemberType = require('../schemas/members')
 
 /*
  ===============================================================================
@@ -104,7 +52,7 @@ const RootQuery = new GraphQLObjectType({
   fields: {
 
     // Returns a single item
-    item: {
+    getItem: {
       type: ItemType,
       args: { _id: { type: GraphQLID } },
       resolve(parent, args) {
@@ -113,7 +61,7 @@ const RootQuery = new GraphQLObjectType({
     },
 
     // Returns a single member
-    member: {
+    getMember: {
       type: MemberType,
       args: { _id: { type: GraphQLID } },
       resolve(parent, args) {
@@ -122,7 +70,7 @@ const RootQuery = new GraphQLObjectType({
     },
 
     // Returns all items
-    items: {
+    getItems: {
       type: new GraphQLList(ItemType),
       resolve(parent, args) {
         return Item.find({})
@@ -130,7 +78,7 @@ const RootQuery = new GraphQLObjectType({
     },
 
     // Returns all members
-    members: {
+    getMembers: {
       type: new GraphQLList(MemberType),
       resolve(parent, args) {
         return Member.find({})
@@ -169,9 +117,7 @@ const Mutation = new GraphQLObjectType({
     addItem: {
       type: ItemType,
       args: {
-        helpType: { type: GraphQLString },
-        tag: { type: GraphQLString },
-        notes: { type: GraphQLString },
+        description: { type: GraphQLString },
         quantity: { type: GraphQLInt },
         memberId: { type: GraphQLID }
       },
@@ -202,11 +148,8 @@ const Mutation = new GraphQLObjectType({
       type: ItemType,
       args: {
         _id: { type: GraphQLID },
-        helpType: { type: GraphQLString },
-        tag: { type: GraphQLString },
-        notes: { type: GraphQLString },
-        quantity: { type: GraphQLInt },
-        memberId: { type: GraphQLID }
+        description: { type: GraphQLString },
+        quantity: { type: GraphQLInt }
       },
       resolve(parent, args) {
         return Item.findByIdAndUpdate(args._id, args, { new: true })

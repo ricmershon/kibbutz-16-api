@@ -20,6 +20,12 @@ const memberSchema = new mongoose.Schema(
     email: { type: String, required: true },
     phone: { type: String, required: false },
     password: { type: String, required: false },
+    contactMethod: {
+      type: String,
+      required: true,
+      enum: ['text', 'email', 'phone'],
+      default: 'text'
+    },
     zipCode: { type: String, required: true }
   }
 )

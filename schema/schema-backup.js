@@ -15,7 +15,7 @@
 
 /*
   ===============================================================================
-  = GraphQL dependencies
+  = Pull in GraphQL dependencies
   ===============================================================================
   */
 
@@ -31,7 +31,7 @@ const {
 
 /*
  ===============================================================================
- = MonogoDB schemas
+ = Pull in MonogoDB schemas
  ===============================================================================
  */
 
@@ -52,9 +52,7 @@ const ItemType = new GraphQLObjectType({
   name: "Item",
   fields: () => ({
     _id: { type: GraphQLID },
-    helpType: { type: GraphQLString },
-    tag: { type: GraphQLString },
-    notes: { type: GraphQLString },
+    description: { type: GraphQLString },
     quantity: { type: GraphQLInt },
     member: {
       type: MemberType,
@@ -169,9 +167,7 @@ const Mutation = new GraphQLObjectType({
     addItem: {
       type: ItemType,
       args: {
-        helpType: { type: GraphQLString },
-        tag: { type: GraphQLString },
-        notes: { type: GraphQLString },
+        description: { type: GraphQLString },
         quantity: { type: GraphQLInt },
         memberId: { type: GraphQLID }
       },
@@ -202,11 +198,8 @@ const Mutation = new GraphQLObjectType({
       type: ItemType,
       args: {
         _id: { type: GraphQLID },
-        helpType: { type: GraphQLString },
-        tag: { type: GraphQLString },
-        notes: { type: GraphQLString },
-        quantity: { type: GraphQLInt },
-        memberId: { type: GraphQLID }
+        description: { type: GraphQLString },
+        quantity: { type: GraphQLInt }
       },
       resolve(parent, args) {
         return Item.findByIdAndUpdate(args._id, args, { new: true })
