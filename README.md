@@ -26,30 +26,79 @@ Ric Mershon
 
 #### Member Shema
 ```
-const memberSchema = new Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: false },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
-  location: { type: String, required: true },
-  have: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Item'} ],
-  need: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Item'} ]
-})
- 
-memberSchema.methods.userName = function (){
- return {
-   firstName: this.firstName,
-   lastName: this.lastName
+const memberSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: { type: String, required: false },
+    password: { type: String, required: false },
+    contactMethod: {
+      type: String,
+      required: true,
+      enum: ['text', 'email', 'phone'],
+      default: 'text'
+    },
+    zipCode: { type: String, required: true }
   }
-}
+)
 ```
 #### Item Schema
 ```
-const itemSchema = new Schema(
+const itemSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    details: String,
-    quantity: Number
+    helpType: {
+      type: String,
+      required: true,
+      enum: ['offering help', 'requesting help'],
+      default: 'requesting help'
+    },
+    tag: {
+      type: String,
+      required: true,
+      enum: [
+        'Baby Supplies',
+        'Business Support',
+        'Food',
+        'Supplies',
+        'Toiletries',
+        'Volunteer Work'
+      ]
+    },
+    notes: String,
+    quantity: Number,
+    memberId: String
   }
 )
-    
+```
+#### User Schema
+```
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    validate: value => {
+      if (!validator.isEmail(value)) {
+          throw new Error({error: 'Invalid Email address'})
+      }
+    }
+  },
+  password: {
+    type: String,
+    required: true,
+    minLength: 8
+  },
+  tokens: [{
+    token: {
+      type: String,
+      required: true
+    }
+  }]
+})
+```
