@@ -143,7 +143,8 @@ query {
       notes
     }
   }
-}```
+}
+```
 
 
 | New | /caregivers/new | GET | Displays new caregiver form |
