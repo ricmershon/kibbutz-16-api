@@ -11,7 +11,8 @@ Kibbutz-19 is a central resource for the finding and offering help during the Co
 
 ### Accessing the Application
 
-Go to https://kibbutz-19-client.herokuapp.com/.
+API: https://kibbutz-19-api.herokuapp.com/graphql
+Client: https://kibbutz-19-client.herokuapp.com/
 
 ### Notable Features
 
