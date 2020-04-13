@@ -123,6 +123,8 @@ GraphQL resolvers are available for UserType and MemberType.
 
 #### Resolvers for Queries
 
+GraphQL queries perform read funtions.
+
 | Resolver | Description |
 | -------- |-------------|
 | user | returns a single user by ID |
@@ -130,7 +132,7 @@ GraphQL resolvers are available for UserType and MemberType.
 | member | returns a single member by ID |
 | members | returns all members |
 
-All of the items associated with a member can be returned with the following sample GraphQL query.
+All of the items associated with a member can be returned with the following sample GraphQL query:
 
 ```
 query {
@@ -146,15 +148,27 @@ query {
 }
 ```
 
-
-| New | /caregivers/new | GET | Displays new caregiver form |
-| Create | /caregivers | POST | Creates new caregiver |
-| Show | /caregivers/:id | GET | Shows an individual caregiver's information |
-| Edit | /caregivers/:id/edit | GET | Displays the edit caregiver form |
-| Update | /caregivers/:id | PUT | Changes caregiver with info from Edit action |
-| Destroy | /caregivers/:id | DELETE | Deletes a caregiver |
-
 #### Resolvers for Mutations
+
+GraphQL mutations peform create, update and delete functions.
+
+| Resolver | Description |
+| -------- |-------------|
+| addMember | adds a member to the DB |
+| updateMember | updates a member's information |
+| deleteMember | delete's a member's record from the DB |
+| addItem | adds an item to the DB |
+| updateItem | updates an item's information |
+| deleteItem | delete's an item's record from the DB |
+
+Mutation to create a member:
+```
+mutation {
+  addMember(name: "Peter Parker" email: "spiderman@theavengers.com" phone: "6786406926" zipCode: "41234") {
+    _id name email phone zipCode
+  }
+}
+```
 
 ### Technologies Used
 
