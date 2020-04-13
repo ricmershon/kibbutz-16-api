@@ -35,6 +35,7 @@ const {
  ===============================================================================
  */
 
+const User = require('../models/users')
 const Item = require('../models/items')
 const Member = require('../models/members')
 
@@ -43,6 +44,39 @@ const Member = require('../models/members')
  = GraphQL Types
  ===============================================================================
  */
+
+const TokenType = new GraphQLObjectType({
+  name: "Token",
+  fields: () => ({
+    _id: { type: GraphQLID },
+    token: { type: GraphQLString },
+  })
+})
+
+  /*
+   = Define UserType
+   */
+
+const UserType = new GraphQLObjectType({
+  name: "User",
+  fields: () => ({
+    _id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    email: { type: GraphQLString },
+    password: { type: GraphQLString },
+    tokens: {
+      type: GraphQLList (TokenType),
+
+      // This resolve method find and returns and array
+      // of all the tokens associated with a user
+      resolve(parent, args) {
+        console.log("resolving tokens");
+        user = User.findById(parent)
+      }
+    }
+  })  // End fields
+})    // End ItemType
+
 
 /*
  = Define ItemType
@@ -103,6 +137,25 @@ const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
 
+    // Returns tokens
+    tokens: {
+      type: TokenType,
+      args: { _id: { type: GraphQLID }},
+      resolve(parents, args) {
+        const user = User.findById(args._id)
+        console.log(user);
+      }
+    },
+
+    // Returns a single user
+    user: {
+      type: UserType,
+      args: { _id: { type: GraphQLID } },
+      resolve(parent, args) {
+        return User.findById(args._id)
+      }
+    },
+
     // Returns a single item
     item: {
       type: ItemType,
@@ -148,6 +201,50 @@ const RootQuery = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
+
+    // Adds a user
+    addUser: {
+      type: UserType,
+      args: {
+        name: { type: GraphQLString },
+        email: { type: GraphQLString },
+        password: { type: GraphQLString }
+      },
+      async resolve(parent,args) {
+        try {
+          const user = new User(args)
+          const data = await user.save()
+          const token = await user.generateAuthToken(data)
+          console.log(token);
+          console.log(data.tokens);
+          return (data)
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
+
+    // Logs in a user
+    loginUser: {
+      type: UserType,
+      args: {
+        email: { type: GraphQLString },
+        password: { type: GraphQLString },
+      },
+      async resolve(parents, args) {
+        try {
+          const user = await User.findByCredentials(args.email, args.password)
+          if (!user) {
+            console.log('Login failed! Check authenticare credentials');
+            return('Login failed.')
+          }
+          const token = await user.generateAuthToken()
+          return({user, token})
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
 
     // Adds a member
     addMember: {
