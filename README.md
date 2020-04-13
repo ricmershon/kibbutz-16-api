@@ -116,6 +116,45 @@ const userSchema = new mongoose.Schema({
 })
 ```
 
+### GraphQL Implementation
+GraphQL is an open-source data query and manipulation language for APIs, and a runtime for fulfilling queries with existing data.
+
+GraphQL resolvers are available for UserType and MemberType.
+
+#### Resolvers for Queries
+
+| Resolver | Description |
+| -------- |-------------|
+| user | returns a single user by ID |
+| users | returns all users |
+| member | returns a single member by ID |
+| members | returns all members |
+
+All of the items associated with a member can be returned with the following sample GraphQL query.
+
+```
+query {
+  member(_id: "xxxx") {
+    name
+    email
+    items {
+      helpType
+      tag
+      notes
+    }
+  }
+}```
+
+
+| New | /caregivers/new | GET | Displays new caregiver form |
+| Create | /caregivers | POST | Creates new caregiver |
+| Show | /caregivers/:id | GET | Shows an individual caregiver's information |
+| Edit | /caregivers/:id/edit | GET | Displays the edit caregiver form |
+| Update | /caregivers/:id | PUT | Changes caregiver with info from Edit action |
+| Destroy | /caregivers/:id | DELETE | Deletes a caregiver |
+
+#### Resolvers for Mutations
+
 ### Technologies Used
 
 * [Express](https://expressjs.com/) - backend framework for Node.js.
