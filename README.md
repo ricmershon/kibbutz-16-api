@@ -187,4 +187,6 @@ mutation {
 
 ### Future Development
 * User authentication with JSON Web Tokens.
+* React route for current Covid 19 News.
+* Flexible data requests on Data page.
 * Search capabilities.
