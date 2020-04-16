@@ -190,3 +190,4 @@ mutation {
 * React route for current Covid 19 News.
 * Flexible data requests on Data page.
 * Search capabilities.
+* Sidebar information.
