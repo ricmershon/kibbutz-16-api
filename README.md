@@ -32,6 +32,8 @@ Kibbutz-19 is built on a MERN model with GraphQL
 3. GraphQL queries performed with Apollo Fetch.
 4. Chart.js for data charts.
 
+Client repo and details can be found at https://github.com/ricmershon/kibbutz-16-client.
+
 ## MongoDB Database Shemas
 
 ### Member Shema
