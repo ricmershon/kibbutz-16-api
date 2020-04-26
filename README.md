@@ -1,5 +1,5 @@
-# Kibbutz-19
-An online community for people to find and share household necessities.
+# Kibbutz-19 Server
+An online community for people to find and share household and other necessities during the Covid-19 crisis.
 
 ## Designer and Engineer
 Ric Mershon
