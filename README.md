@@ -1,25 +1,23 @@
-# SEIR Final Project
-
-## Kibbutz-19
+# Kibbutz-19
 An online community for people to find and share household necessities.
 
-### Designer and Engineer
+## Designer and Engineer
 Ric Mershon
 
-### Background
+## Background
 Kibbutz-19 is a central resource for the finding and offering help during the Covid-19 crisis.
 
-### Accessing the Application
+## Accessing the Application
 
 API: https://kibbutz-19-api.herokuapp.com/graphql
 
 Client: https://kibbutz-19-client.herokuapp.com (Alternatively at kibbutz-19.com but unsecured)
 
-### Notable Features
+## Notable Features
 
 Kibbutz-19 is built on a MERN model with GraphQL
 
-#### API
+### API
 
 1. MongoDB database with a relatonal model to associte items with members. See Database Schemas section below.
 2. Backend developed with Express and Node.js frameworks.
@@ -27,16 +25,16 @@ Kibbutz-19 is built on a MERN model with GraphQL
 4. Database deployed to AWS using MongoDB Atlas.
 5. Deployed to Heroku.
 
-#### Client
+### Client
 
 1. Responsive interface built with ReactJS and React Bootstrap.
 2. React Router with React Router Dom for easy interface navigation.
 3. GraphQL queries performed with Apollo Fetch.
 4. Chart.js for data charts.
 
-### MongoDB Database Shemas
+## MongoDB Database Shemas
 
-#### Member Shema
+### Member Shema
 ```
 const memberSchema = new mongoose.Schema(
   {
@@ -54,7 +52,7 @@ const memberSchema = new mongoose.Schema(
   }
 )
 ```
-#### Item Schema
+### Item Schema
 ```
 const itemSchema = new mongoose.Schema(
   {
@@ -85,7 +83,7 @@ const itemSchema = new mongoose.Schema(
   }
 )
 ```
-#### User Schema
+### User Schema
 ```
 const userSchema = new mongoose.Schema({
   name: {
@@ -118,12 +116,12 @@ const userSchema = new mongoose.Schema({
 })
 ```
 
-### GraphQL Implementation
+## GraphQL Implementation
 GraphQL is an open-source data query and manipulation language for APIs, and a runtime for fulfilling queries with existing data.
 
 GraphQL resolvers are available for UserType and MemberType.
 
-#### Resolvers for Queries
+### Resolvers for Queries
 
 GraphQL queries perform read funtions.
 
@@ -150,7 +148,7 @@ query {
 }
 ```
 
-#### Resolvers for Mutations
+### Resolvers for Mutations
 
 GraphQL mutations peform create, update and delete functions.
 
@@ -172,7 +170,7 @@ mutation {
 }
 ```
 
-### Technologies Used
+## Technologies Used
 
 * [Express](https://expressjs.com/) - backend framework for Node.js.
 * [MongoDB](https://www.mongodb.com/) - a general purpose, document-based, distributed database. Database deployed to [AWS](https://aws.amazon.com/) (Amazon Web Services) using MongoDB Atlas.
@@ -185,7 +183,7 @@ mutation {
 * [Trello board](https://trello.com/b/AKxShGdp/kibbutz-19) - for project management.
 * [Chart.js](https://www.chartjs.org/) - a free open-source JavaScript library for data visualization
 
-### Future Development
+## Future Development
 * User authentication with JSON Web Tokens.
 * React route for current Covid 19 News.
 * Flexible data requests on Data page.
