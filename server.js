@@ -50,10 +50,7 @@ const mongodbURI = process.env.MONGODB_URI;
 app.use(cors())
 app.use(
   "/graphql",
-  expressGraphQL({
-    schema: schema,
-    graphiql: true
-  })
+  expressGraphQL({ schema: schema, graphiql: true })
 );
 
 app.use(express.urlencoded({ extended: false }));

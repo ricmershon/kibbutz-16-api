@@ -216,7 +216,7 @@ const Mutation = new GraphQLObjectType({
           const data = await user.save()
           const token = await user.generateAuthToken(data)
           console.log(token);
-          console.log(data.tokens);
+          console.log(data.token);
           return (data)
         } catch (error) {
           console.log(error);

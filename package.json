@@ -2,7 +2,7 @@
   "name": "kibbutz-16-api",
   "version": "1.0.0",
   "engines": {
-    "node": "v13.6.0"
+    "node": "13.6.0"
   },
   "description": "API for community support page for COVID-19 pandemic",
   "main": "server.js",
